@@ -1,0 +1,32 @@
+{
+  "name": "qapio-debugger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdip/qapio-debugger.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tdip/qapio-debugger/issues"
+  },
+  "homepage": "https://github.com/tdip/qapio-debugger#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "@types/websocket": "^1.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "websocket": "^1.0.33"
+  }
+}
