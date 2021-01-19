@@ -50,7 +50,7 @@ function App() {
       if (dataFromServer.type === "message") {
         setMsgServer(dataFromServer.msg);
       }
-    };
+    };;
   })*/
 
   return (
