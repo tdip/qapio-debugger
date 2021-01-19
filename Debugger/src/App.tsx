@@ -3,9 +3,10 @@ import * as qapio from "./qapio";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 /*const client = new W3CWebSocket('ws://127.0.0.1:8000');*/
+const start = async () => {
 
-      const graphRunner = qapio.createGraphRunner();
-      const graph =  graphRunner.runGraph([{
+      const graphRunner = await qapio.createGraphRunner();
+      const graph =  await graphRunner.runGraph([{
           nodes: {
               prices: {
                   selection: {
@@ -28,12 +29,15 @@ import { w3cwebsocket as W3CWebSocket } from "websocket";
               }
           ]
       }]);
-      console.log(graph);
+      const ws = graph.getStreamWebsocket('input');
+      console.log( ws);
+    }
 
 function App() {
+  start();
   
 
-  const [msgserver, setMsgServer] = React.useState("");
+  const [msgserver, setMsgServer] = React.useState(start());
 
   /*const onButtonClicked = () => {
     client.send(JSON.stringify({

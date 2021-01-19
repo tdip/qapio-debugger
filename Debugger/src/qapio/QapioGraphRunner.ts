@@ -8,7 +8,7 @@ const K_GRAPH = "graph";
 
 export class QapioGraphInstance {
 
-    private readonly endpoint : string = "ws://localhost:8080/graphStream"
+    private readonly endpoint : string = "ws://10.8.2.3:8080/graphStream"
 
     constructor(
         private readonly graphId: string) {}
@@ -23,7 +23,7 @@ export class QapioGraphInstance {
 
 export class QapioGraphRunner {
 
-    private readonly endpoint : string = "ws://localhost:8080/graphRun";
+    private readonly endpoint : string = "ws://10.8.2.3:8080/graphRun";
 
     private readonly websocket : WebSocket;
 
@@ -47,8 +47,10 @@ export class QapioGraphRunner {
         );
 
         this.websocket.onmessage = (event) => {
+            
 
             const result = JSON.parse(event.data);
+            console.log("hola", event);
             const graphId = result[K_GRAPH_ID];
             const entry = this.pendingResponses[graphId];
 
