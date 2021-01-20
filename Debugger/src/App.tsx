@@ -1,66 +1,66 @@
 import * as React from "react";
-import * as qapio from "./qapio";
+//import * as qapio from "./qapio";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 /*const client = new W3CWebSocket('ws://127.0.0.1:8000');*/
-const start = async () => {
 
-      const graphRunner = await qapio.createGraphRunner();
-      const graph =  await graphRunner.runGraph([{
-          nodes: {
-              prices: {
-                  selection: {
-                      interface: "Tdip.Qapio.Services.Core.SubInterface",
-                      query: {
-                          topic: "price-events"
-                      }
-                  }
-              },
-              input: {
-                  selection: {
-                      interface: "Tdip.Qapio.Runtimes.Api.ProcessInputStreamInterface"
-                  }
-              }
-          },
-          edges: [
-              {
-                  from: "prices",
-                  to: "input"
-              }
-          ]
-      }]);
-      const ws = graph.getStreamWebsocket('input');
-      console.log( ws);
+import { createGraphRunner } from "./qapio"
+const start = async () => {
+  const handler = createGraphRunner();
+  const instance = await handler.runGraph([
+    {
+      nodes: {
+        status: {
+            selection: {
+                interface: "Tdip.Qapio.Services.Debug.SelectionDebug",
+            }
+        },
+        input: {
+            selection: {
+                interface: "Tdip.Qapio.Runtimes.Api.ProcessInputStreamInterface"
+            }
+        }
+      },
+      edges: [
+        {
+            from: "status",
+            to: "input"
+        }
+      ]
     }
+  ]);
+  const wss = instance.getStreamWebsocket("input");
+  return wss;
+}
 
 function App() {
-  start();
-  
 
-  const [msgserver, setMsgServer] = React.useState(start());
-
-  /*const onButtonClicked = () => {
-    client.send(JSON.stringify({
-      type: "message",
-      msg: "sent from client"
-    })
-    );
-  }
+  const [socket, setSocket] = React.useState(null);
+  const [msg, setMsg] = React.useState([]);
 
   React.useEffect(() => {
-    client.onmessage = (message:any) => {
-      const dataFromServer = JSON.parse(message.data);
-      console.log('got reply! ', dataFromServer);
-      if (dataFromServer.type === "message") {
-        setMsgServer(dataFromServer.msg);
-      }
-    };;
-  })*/
+    start().then(v => {
+      setSocket(v)});
+  }, [])
+
+  React.useEffect(() => {
+    if(socket != null){
+      socket.onmessage = (e:any) => {
+        const newMsg = JSON.parse(e.data);
+        
+        setMsg([...msg, newMsg]);
+      };
+      console.log(msg);
+      
+    }
+  })
+
+  var messages = msg.map((m, index) => <label key={index}>new message</label>)
 
   return (
     <React.Fragment>
       <h1>Websocket Test</h1>
-      {console.log("hello")}
+      {messages}
     </React.Fragment>
   );
 }
