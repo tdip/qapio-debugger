@@ -1,4 +1,4 @@
-import { createGraphRunner } from "./QapioGraphRunner"
+import { createGraphRunner } from "./qapio/QapioGraphRunner"
 
 export const getWebSocketQapio = async () => {
   const handler = createGraphRunner();
