@@ -9,7 +9,20 @@ function App() {
   
   const [socket, setSocket] = React.useState(null);
   const [data, setData] = React.useState<msg[]>([]);
-  const [count, setcount] = React.useState(1);
+
+  const newMessage = (msgs:msg[]) => {
+    const oldId = data.map(x => x.selectionId);
+    var oldData : msg[] = [];
+    var newData : msg[] = [];
+    for(let i = 0; i < msgs.length; i++){
+      if(oldId.indexOf(msgs[i].selectionId)){
+        oldData.push(msgs[i]);
+      }else{
+        newData.push(msgs[i])
+      }
+    }
+    return oldData.concat(newData)
+  };
 
   React.useEffect(() => { 
     getWebSocketQapio().then(v => {
@@ -17,19 +30,17 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-    if(socket != null && count == 1){
+    if(socket != null){
       socket.onmessage = (e:any) => {
         const newMsg = JSON.parse(e.data);
         const newMsgselect = newMsg.selections;
-        setData(newMsgselect);
-        setcount(0);
+        setData(newMessage(newMsgselect));
       };
-      console.log(data)
     }
   })
 
   const Row = ({ index, style }) => (
-    <div style={style}>{data[index].interface}</div>
+    <div style={style}>{`${index} ${data[index].selectionId} ${data[index].interface} ${data[index].query}`}</div>
   );
    
   const objectList = () => (
