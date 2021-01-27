@@ -1,0 +1,26 @@
+$backColor: rgb(48, 54, 52);
+$baseColor: #cfdae0ff;
+$baseColor2: #60c3daff;
+$headerColor: #293742ff;
+$generalText: #e1e8edff;
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: $backColor;
+    color: $generalText;
+}
+
+button{
+    outline: none;
+    margin-bottom: 5px;
+    background: $baseColor;
+    border-radius: 7px;
+    color: black;
+    padding: 0 10px;
+    filter: drop-shadow(0px 2px 5px rgb(0, 0, 0));
+}
+
+button:hover{
+    background: $baseColor2;
+    color: white;
+}

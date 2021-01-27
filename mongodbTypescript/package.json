@@ -1,5 +1,5 @@
 {
-  "name": "mongodbTypescript",
+  "name": "mongodbtypescript",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -17,8 +17,10 @@
   "dependencies": {
     "@types/mongodb": "^3.6.3",
     "mongodb": "^3.6.3",
+    "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-json-view": "^1.20.4",
     "websocket": "^1.0.33"
   },
   "description": ""

@@ -1,5 +1,7 @@
 import * as React from "react";
+import ReactJson from 'react-json-view'
 import { getMongoWebSockets } from "./mongoConnection";
+import "./styles/styles.scss";
 
 function App() {
   const [socket, setSocket] = React.useState(null);
@@ -33,19 +35,24 @@ function App() {
     }
   };
 
-  const vulnerabilities = (
+  /*const vulnerabilities = (
       data.map((id, index) =>
         <div>
             <h2 key={index}>{JSON.stringify(id._id)} vulnerabilities:</h2>
             {id.vulnerabilities.map((v, index) => <div key={index}><label>{`${index} ${JSON.stringify(v)}`}</label><br/><br/></div> )}
         </div>
         )
+  )*/
+
+  const vulnerabilities = (
+    data.map((id, index) => <div><ReactJson src={id} collapsed={true} name={id._id.$oid} theme="colors" key={index}/><br/></div>)
   )
   
   return (
     <React.Fragment>
       <h1>mongo test</h1>
       <button disabled={socket == null ? true : false} onClick={sendMsg}>Get results</button>
+      <br/><br/>
       {vulnerabilities}
     </React.Fragment>
   );
